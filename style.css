@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-principal: #284260;
+    --cor-destaque: #fac900;
+    --cor-historia: #c75eeb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+    font-family: "Bai Jamjuree", sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+.introducao {
+    color: var(--cor-principal);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+}
+
+p {
+    padding-top: 10px;
+}
+
+#tangram-caixa {
+    width: 700px;
+    height: 500px;
+    border: 2px solid var(--cor-destaque);
+    border-radius: 20px;
+    position: relative; 
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.tangram-imagem {
+    position: absolute;
+    cursor: grab;
+    width: 100px; 
+    transition: transform 0.2s ease;
+}
+
+.controles {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: var(--cor-destaque);
+    color: var(--cor-principal);
+    border: none;
+    border-radius: 15px;
+    margin: 5px;
+    padding: 10px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: "Bai Jamjuree", sans-serif;
+}
+
+button:hover{
+    background-color: var(--cor-historia);
+    color: white;
+}
