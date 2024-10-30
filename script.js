@@ -7,28 +7,28 @@ let offsetX, offsetY;
 let taArrastando = false;
 let anguloRotacao = 0;
 
-// Gera posições iniciais aleatórias para as peças
+const versaoAtual = {};
+
 function posicaoAleatoria(peca) {
     const caixaRect = caixa.getBoundingClientRect();
     const pecaWidth = peca.offsetWidth;
     const pecaHeight = peca.offsetHeight;
 
-    // Defini posições aleatórias - as peças não deve sair do tabuleiro
     const randomX = Math.random() * (caixaRect.width - pecaWidth);
     const randomY = Math.random() * (caixaRect.height - pecaHeight);
 
     peca.style.left = `${randomX}px`;
     peca.style.top = `${randomY}px`;
-    peca.style.position = 'absolute'; 
+    peca.style.position = 'absolute';
 }
 
 peca.forEach(peca => {
+    const id = peca.id;
+    versaoAtual[id] = 1; 
     posicaoAleatoria(peca);
 });
 
-// Movimentação e rotação das peças
 peca.forEach(peca => {
-    // Arrastar
     peca.addEventListener('mousedown', (e) => {
         pecaSelecionada = e.target;
         offsetX = e.clientX - parseFloat(pecaSelecionada.style.left);
@@ -37,13 +37,11 @@ peca.forEach(peca => {
         pecaSelecionada.style.cursor = 'grabbing';
     });
 
-    // Parar o arrastar
     peca.addEventListener('mouseup', () => {
         pecaSelecionada.style.cursor = 'grab';
         taArrastando = false;
     });
 
-    // Mantém a peça selecionada
     peca.addEventListener('click', (e) => {
         if (!taArrastando) { 
             pecaSelecionada = e.target;
@@ -52,7 +50,6 @@ peca.forEach(peca => {
     });
 });
 
-// Girar para a esquerda
 btnEsquerda.addEventListener('click', () => {
     if (pecaSelecionada) {
         anguloRotacao -= 15;
@@ -60,7 +57,6 @@ btnEsquerda.addEventListener('click', () => {
     }
 });
 
-// Girar para a direita
 btnDireita.addEventListener('click', () => {
     if (pecaSelecionada) {
         anguloRotacao += 15;
@@ -68,23 +64,31 @@ btnDireita.addEventListener('click', () => {
     }
 });
 
-// Segue o mouse para movimento
 document.addEventListener('mousemove', (e) => {
     if (pecaSelecionada && taArrastando) {
         const caixaRect = caixa.getBoundingClientRect();
         const pecaWidth = pecaSelecionada.offsetWidth;
         const pecaHeight = pecaSelecionada.offsetHeight;
 
-        // Manter movimento dentro do tabuleirooo
         let newX = e.clientX - offsetX;
         let newY = e.clientY - offsetY;
 
-        // Garante que a peça não saia do tabuleiro sambando
         newX = Math.max(0, Math.min(newX, caixaRect.width - pecaWidth));
         newY = Math.max(0, Math.min(newY, caixaRect.height - pecaHeight));
 
-        // O mouse estava ficando distante da peça, isso resolve :)
         pecaSelecionada.style.left = `${newX}px`;
         pecaSelecionada.style.top = `${newY}px`;
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'c' && pecaSelecionada) {
+        const id = pecaSelecionada.id;
+        let versao = versaoAtual[id];
+
+        versao = versao < 6 ? versao + 1 : 1;
+        versaoAtual[id] = versao;
+
+        pecaSelecionada.src = `img/${id}-${versao.toString().padStart(2, '0')}.svg`;
     }
 });
