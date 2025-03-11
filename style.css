@@ -52,7 +52,7 @@ p {
 .tangram-imagem {
     position: absolute;
     cursor: grab;
-    width: 100px; 
+    /* width: 15%;  */
     transition: transform 0.2s ease;
 }
 
